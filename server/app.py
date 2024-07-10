@@ -9,11 +9,14 @@ from flask_restful import Resource
 # Local imports
 from config import app, db, api
 # Add your model imports
+from flask_jwt_required import jwt_required
+
 
 
 # Views go here!
 
 @app.route('/')
+@jwt_required()
 def index():
     return '<h1>Project Server</h1>'
 
