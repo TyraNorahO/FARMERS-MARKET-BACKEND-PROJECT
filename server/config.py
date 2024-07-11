@@ -7,6 +7,7 @@ from flask_migrate import Migrate
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
+from auth import jwt,auth_bp,bcrypt
 
 # Local imports
 
@@ -14,7 +15,11 @@ from sqlalchemy import MetaData
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET KEY'] = '9d1608035e013ed57370aff38dee' 
 app.json.compact = False
+app.register.Blueprint(auth_bp)
+
+
 
 # Define metadata, instantiate db
 metadata = MetaData(naming_convention={
@@ -23,11 +28,11 @@ metadata = MetaData(naming_convention={
 db = SQLAlchemy(metadata=metadata)
 migrate = Migrate(app, db)
 db.init_app(app)
+jwt.db_init(app)
+bcrypt.db_init(app)
 
 # Instantiate REST API
 api = Api(app)
 
 # Instantiate CORS
 CORS(app)
-
-

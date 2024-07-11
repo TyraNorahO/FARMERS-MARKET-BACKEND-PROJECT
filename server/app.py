@@ -8,13 +8,26 @@ from models import db, User, Product, Order, OrderItem
 app = Flask(__name__)
 CORS(app)  # This will enable CORS for all routes
 
-app.config.from_object(Config)
+
+# Local imports
+from config import app, db, api
+# Add your model imports
+from flask_jwt_required import jwt_required
+
+
+app.config.from_object(Co
 
 db.init_app(app)
 
 with app.app_context():
     db.create_all()
 
+
+@app.route('/')
+@jwt_required()
+def index():
+    return '<h1>Project Server</h1>'
+=======
 @app.route('/user', methods=['POST'])
 def create_user():
     data = request.get_json()
@@ -22,6 +35,7 @@ def create_user():
     db.session.add(new_user)
     db.session.commit()
     return jsonify(new_user.serialize()), 201
+
 
 @app.route('/user/<int:user_id>', methods=['GET'])
 def get_user(user_id):

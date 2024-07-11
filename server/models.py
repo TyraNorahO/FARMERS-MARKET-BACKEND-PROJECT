@@ -3,6 +3,17 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
 from flask_cors import CORS
 
+
+
+from config import db
+
+# Models go here!
+class RegisterUser():
+    __tablename__ = "registeruser"
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100))
+    password = db.Column(db.String(30) )
+=======
 db = SQLAlchemy()
 
 class User(db.Model, SerializerMixin):
@@ -48,3 +59,4 @@ class OrderItem(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<OrderItem {self.id}, {self.order_id}, {self.product_id}, {self.quantity}>'
+
