@@ -38,14 +38,14 @@ with app.app_context():
 def index():
     return '<h1>Project Server</h1>'
 class Products(Resource):
-    @jwt_required
+    #@jwt_required
     def get(self):
         products = [product.to_dict() for product in ProductModel.query.all()]
         response = make_response(jsonify(products), 200)
         return response
 
 class ProductByID(Resource):
-    @jwt_required
+    #@jwt_required
     def get(self, id):
         product = ProductModel.query.filter_by(id=id).first()
         if product is None:
