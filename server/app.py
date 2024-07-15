@@ -89,6 +89,8 @@ class Reviews(Resource):
         review_dict = review.to_dict()
         return make_response(jsonify(review_dict), 200)
 
+
+
 api.add_resource(Products, '/products/')
 api.add_resource(ProductByID, '/products/<int:id>')
 api.add_resource(Orders, '/orders/<int:id>')
