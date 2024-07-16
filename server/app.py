@@ -38,8 +38,13 @@ with app.app_context():
 def index():
     return '<h1>Project Server</h1>'
 
+
 class ProductList(Resource):
     @jwt_required()
+
+class Products(Resource):
+    #@jwt_required
+
     def get(self):
         current_user_id = get_jwt_identity()
         type_filter = request.args.get('type')
@@ -79,7 +84,9 @@ class ProductList(Resource):
         }, 200
 
 class ProductByID(Resource):
+
     @jwt_required()
+    #@jwt_required
     def get(self, id):
         product = ProductModel.query.filter_by(id=id).first()
         if product is None:
@@ -152,6 +159,7 @@ class OrderItemByID(Resource):
         order_item.quantity = quantity
         db.session.commit()
 
+
         return {
             'id': order_item.id,
             'product_id': order_item.product_id,
@@ -165,6 +173,7 @@ class OrderItemByID(Resource):
         }, 200
 
 api.add_resource(ProductList, '/products')
+api.add_resource(Products, '/products/')
 api.add_resource(ProductByID, '/products/<int:id>')
 api.add_resource(OrderItemList, '/order_items')
 api.add_resource(OrderItemByID, '/order_items/<int:id>')
