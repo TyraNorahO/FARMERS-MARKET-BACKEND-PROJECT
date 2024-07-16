@@ -35,19 +35,16 @@ class Signup(Resource):
         db.session.commit()
         return {"msg": "You have signed up successfully"}, 201
 
-# Login
 login_args = reqparse.RequestParser()
 login_args.add_argument('email', type=str, required=True, help='Email is required')
-login_args.add_argument('password1', type=str, required=True, help='Password is required')
+login_args.add_argument('password', type=str, required=True, help='Password is required')
 
 class Login(Resource):
     def post(self):
         data = login_args.parse_args()
         user = Customer.query.filter_by(email=data.get('email')).first()
-        if not user:
-            return {"msg": "The email does not exist"}, 404
-        if not bcrypt.check_password_hash(user.password, data.get('password1')):
-            return {"msg": "Incorrect password"}, 401
+        if not user or not bcrypt.check_password_hash(user.password, data.get('password')):
+            return {"msg": "Invalid email or password"}, 401
         
         token = create_access_token(identity=user.id)
         refresh_token = create_refresh_token(identity=user.id)
@@ -62,3 +59,13 @@ class Login(Resource):
 auth_api.add_resource(Signup, '/signup')
 auth_api.add_resource(Login, '/login')
 
+# def delete(self):
+#         try:
+#             # Delete all products from the database
+#             ProductModel.query.delete()
+#             db.session.commit()
+#             return {'message': 'All products deleted successfully'}, 200
+#         except Exception as e:
+#             # Handle any exceptions
+#             db.session.rollback()
+#             return {'error': str(e)}, 500
