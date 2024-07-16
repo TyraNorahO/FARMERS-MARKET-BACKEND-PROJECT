@@ -1,4 +1,3 @@
-# models.py
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
@@ -42,13 +41,14 @@ class Order(db.Model, SerializerMixin):
 class OrderItem(db.Model, SerializerMixin):
     __tablename__ = 'order_item'
     id = db.Column(db.Integer, primary_key=True)
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=True)
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
+    customer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
         return f'<OrderItem {self.id}, {self.order_id}, {self.product_id}, {self.quantity}>'
-    
+
 class Review(db.Model, SerializerMixin):
     __tablename__ = 'review'
     id = db.Column(db.Integer, primary_key=True)
