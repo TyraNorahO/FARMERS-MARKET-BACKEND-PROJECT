@@ -59,13 +59,3 @@ class Login(Resource):
 auth_api.add_resource(Signup, '/signup')
 auth_api.add_resource(Login, '/login')
 
-# def delete(self):
-#         try:
-#             # Delete all products from the database
-#             ProductModel.query.delete()
-#             db.session.commit()
-#             return {'message': 'All products deleted successfully'}, 200
-#         except Exception as e:
-#             # Handle any exceptions
-#             db.session.rollback()
-#             return {'error': str(e)}, 500
