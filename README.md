@@ -16,7 +16,7 @@ Git
 
 ### Installation instruction
 ```
-Git clone 
+Git clone git@github.com:TyraNorahO/FARMERS-MARKET-Backend-PROJECT.git
 
 ```
 
